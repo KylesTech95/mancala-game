@@ -146,8 +146,6 @@ function playerTurn(){
    })
 }
 playerTurn()
-
-
 const selectPlayables=(arr)=>{
    arr=arr.filter((hole,i)=>{
       if(hole.children.length>0&&i!==arr.length-1){
