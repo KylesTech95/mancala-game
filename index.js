@@ -6,15 +6,15 @@ let pebblesArr = document.querySelectorAll('.pebble')
 let colors= ['red','orange','yellow','green','blue','purple','indigo','cyan','lime']
 
 let unitSize = 15
-let repeated_positions = []
+let handgrab = []
 let i = 0;
 
-// set pebble position to random.
+
+// Place your pebbles in your perspective holes
 const placePebbles = (min,max) => {
    holesArr.forEach(h =>{
     let pebble = [...h.children];
     pebble.forEach(peb=>{
-    console.log(peb)
     peb.style=`left:${Math.round((Math.random()*(max-min)+min)*unitSize)/unitSize}px;top:${Math.round((Math.random()*(max-min)+min)*unitSize)/unitSize}px;background:${colors[Math.floor(Math.random()*colors.length)]}`
     })
     
@@ -22,6 +22,27 @@ const placePebbles = (min,max) => {
  
 
 }
-let X = placePebbles(0,(hole_width/2))
-let Y = placePebbles(0,(hole_height/2))
+placePebbles(0,((hole_width+50)/2))
+placePebbles(0,((hole_height+50)/2))
+
+// pointer events function
+function pointerEventsFn(event){
+   let len = event.target.children.length;
+   let h = event.target
+     // if pebbles are not there set no pointer events
+     if(len < 1){
+      h.style='pointer-events:none'
+     }
+     else{
+      h.style='pointer-events:auto'
+     }
+}
+// Pick a hole to grab pebbles from
+const available_holes = () => {
+   holesArr.forEach(h=>{
+      h.addEventListener('mouseleave',pointerEventsFn)
+      h.addEventListener('mouseenter',pointerEventsFn)
+   })g
+}
+available_holes()
 
