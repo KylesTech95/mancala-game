@@ -15,7 +15,6 @@ let unitSize = 15
 let handgrab = []
 let comphand = []
 let compRound = []
-let longtermStorage = []
 let i = 0;
 let gameBorder = document.querySelector('#game-border')
 let bg_colors = ['ghostWhite','silver','navy','none','red']
@@ -112,7 +111,6 @@ function movePebbles(event){
       // remove each pebble from its hole and put it in your 
       let take = hola.removeChild(pebbles[i])
       let lastPebDrop = handgrab[handgrab.length-1]
-          longtermStorage.push(lastPebDrop)
       holesArr = [...holesArr].filter((h,i)=>!h.classList.contains('middle'))
       holesArr.forEach((h,index)=>{
          // if target === hole
@@ -127,6 +125,22 @@ function movePebbles(event){
                let score = nextHole.children[0]
                score.textContent=(Number(score.textContent))+1
             }
+            // if goal contains handgrab[handgrab.length-1]
+            if(nextHole.id==='player-1'){
+               let children = [...nextHole.children].filter((_,i)=>i!==0)
+               if(children.includes(lastPebDrop) && handgrab.indexOf(lastPebDrop)== len-1){
+                  playerTurn()
+                  holesArr.forEach(h=>h.style.pointerEvents='auto')
+               }
+               }
+            else{
+               console.log(i)
+               if(i===(len-1)){
+                  console.log('no GOAL')
+                  setTimeout(()=>computerTurn(),(600*len)+250)
+                  holesArr.forEach(h=>h.style.pointerEvents='none')
+               }
+            }
             counter++
          }
       })
@@ -135,17 +149,7 @@ function movePebbles(event){
    counter=1;
    handgrab=[]
    }
-   let goal1 = document.querySelector('#player-1');
-   let lastChild = [...goal1.children][goal1.children.length-1]
-      // what happens if player pebbles end in goal?
-      if(lastChild===longtermStorage[longtermStorage.length-1]){
-         console.log('FUCK YES')
-         playerTurn()
-         holesArr.forEach((x,i)=>x.style.pointerEvents='auto')
-      }
-      else{
-         computerTurn()
-      }
+   
 
    
 }
@@ -211,13 +215,14 @@ function movePebbles_comp(arr){
        // enable pointer events for player 1 immediately
       holesArr.forEach((h,index)=>{
       if(index<7 && !h.classList.contains('middle')){
-         h.style.pointerEvents='auto'
+         h.style.pointerEvents='none'
       }
      
    })
       playerTurn()
    },(600*len)+250)
-   for(let i = 0; i < pebbles.length; i++){ 
+   for(let i = 0; i < len; i++){ 
+   let lastPebDrop = handgrab[handgrab.length-1]
    setTimeout(()=>{
       // grab all you pebbles to see what you have in the console
       handgrab.push(pebbles[i])
@@ -237,6 +242,23 @@ function movePebbles_comp(arr){
             if(nextHole.classList.contains('goal')&&nextHole.id!="player-1"){
                let score = nextHole.children[0]
                score.textContent=(Number(score.textContent))+1
+            }
+            // if goal contains handgrab[handgrab.length-1]
+            if(nextHole.id==='player-2'){
+               let children = [...nextHole.children].filter((_,i)=>i!==0)
+               if(children.includes(lastPebDrop) && handgrab.indexOf(lastPebDrop)== len-1){
+                  computerTurn()
+                  holesArr.forEach(h=>h.style.pointerEvents='none')
+               }
+               }
+            else{
+               console.log(i)
+               if(i===(len-1)){
+                  console.log('no GOAL')
+                  setTimeout(()=>{
+                     playerTurn()
+                  },(600*len)+250)
+               }
             }
             // console.log(nextHole)
             counter++
