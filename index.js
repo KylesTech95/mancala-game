@@ -91,7 +91,8 @@ function movePebbles(event){
    let hola = event.currentTarget;
    let p1Children = [...p1Side.children]
    let p2Children = [...p2Side.children]
-   p1Children.forEach(child => child.style.pointerEvents='auto')
+   // uncomment to test player 1 pebble movement
+   // p1Children.forEach(child => child.style.pointerEvents='auto')
 
 
    // computer's turn
