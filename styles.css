@@ -58,6 +58,7 @@ align-items: center;
 }
 .goal{
     position:absolute;
+    
 }
 /* holes */
 .hole{
@@ -90,6 +91,7 @@ align-items: center;
     border-radius: 12px;
     box-shadow: inset 0 0 16px .5px #333;
     position:absolute;
+    pointer-events: none;
 }
 #player-1{
     right:15px;

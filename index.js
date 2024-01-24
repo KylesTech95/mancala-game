@@ -22,7 +22,7 @@ for(let i in goals){
    let p1=(goals[i].id==='player-1')
    let p2=(goals[i].id==='player-2')
    if(p1){
-      goals[i].style = `top:${gameHeight/10}px`
+      goals[i].style = `top:${gameHeight/10}px;`
    }
    else{
       goals[i].style = `bottom:${gameHeight/10}px`
@@ -64,7 +64,9 @@ function pointerEventsFn(event){
 // Pick a hole to grab pebbles from
 const available_holes = () => {
    holesArr.forEach((h,i)=>{
+      if(h.id!=='player-2' || h.id!=='player-1'){
          h.addEventListener('mouseenter',pointerEventsFn)
+      }
    })
 }
 // drop pebbles function
