@@ -3,7 +3,8 @@ let holeSize = document.querySelector('.hole')
 let holesArr = document.querySelectorAll('.space')
 let p1Side = document.getElementById('player-side1')
 let p2Side = document.getElementById('player-side2')
-
+let goalWidth = document.querySelector('#player-1').clientWidth
+let goalHeight = document.querySelector('#player-1').clientHeight
 let hole_width = holeSize.clientWidth;
 let hole_height = holeSize.clientHeight;
 let pebblesArr = document.querySelectorAll('.pebble')
@@ -12,8 +13,8 @@ let nextHole;
 let counter = 1;
 let unitSize = 15
 let handgrab = []
+let comphand = []
 let i = 0;
-let player1Active = true;
 let gameHeight = document.querySelector('#game-border').getBoundingClientRect().height;
 let goals = document.querySelectorAll('.goal') // array 
 
@@ -28,17 +29,8 @@ for(let i in goals){
    }
 }
 
-if(player1Active){
-p1Side.style.pointerEvents='auto'
-p2Side.style.pointerEvents='none'
-}
-else{
-p2Side.style.pointerEvents='auto '
-p1Side.style.pointerEvents='none'
-
-}
-// Place your pebbles in your perspective holes
-const placePebbles = (min,max) => {
+// Place pebbles in their perspective holes
+const placePebbles = (min,max,type) => {
    holesArr.forEach(h =>{
     let pebble = [...h.children];
     pebble.forEach(peb=>{
@@ -56,12 +48,11 @@ placePebbles(0,((hole_height+50)/2))
 
 
 
-
-
 // pointer events function
 function pointerEventsFn(event){
    let len = event.target.children.length;
    let h = event.target
+
      // if pebbles are not there set no pointer events
      if(len < 1){
       h.style='pointer-events:none'
@@ -72,8 +63,9 @@ function pointerEventsFn(event){
 }
 // Pick a hole to grab pebbles from
 const available_holes = () => {
-   holesArr.forEach(h=>{
-      h.addEventListener('mouseenter',pointerEventsFn)
+   holesArr.forEach((h,i)=>{
+      console.log(i)
+         h.addEventListener('mouseenter',pointerEventsFn)
    })
 }
 // drop pebbles function
@@ -93,7 +85,6 @@ function movePebbles(event){
    // computer's turn
    setTimeout(()=>{
      p1Children.forEach(child => child.style.pointerEvents='none')
-     p2Children.forEach(child => child.style.pointerEvents='auto')
       computerTurn()
    },(600*len)+250)
    for(let i = 0; i < pebbles.length; i++){ 
@@ -103,6 +94,7 @@ function movePebbles(event){
       // console.log(handgrab)
       // remove each pebble from its hole and put it in your 
       let take = hola.removeChild(pebbles[i])
+      holesArr = [...holesArr].filter((h,i)=>!h.classList.contains('middle'))
       holesArr.forEach((h,index)=>{
          // if target === hole
          if(hola === h){
@@ -114,6 +106,7 @@ function movePebbles(event){
             // set the hole's pointerEvent to auto
             nextHole.style.pointerEvents='auto'
             counter++
+            console.log(nextHole)
          }
       })
    },600*i)
@@ -138,15 +131,16 @@ playerTurn()
 
 
 // get valid hole (computer)
-const getValidHole = () =>{
+const getValidHoles = () =>{
    let arr = [...p2Side.children]
-   arr.forEach((hole,i)=>{
+   arr.filter((hole,i)=>{
       if(hole.children.length>0){
-         console.log(hole)
+         return hole
       }
    })
+   console.log(arr)
 }
 // computer turn
 function computerTurn(){
-   getValidHole()
+   getValidHoles()
 }
