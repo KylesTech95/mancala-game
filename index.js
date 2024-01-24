@@ -32,10 +32,13 @@ for(let i in goals){
 // Place pebbles in their perspective holes
 const placePebbles = (min,max,type) => {
    holesArr.forEach(h =>{
-    let pebble = [...h.children];
-    pebble.forEach(peb=>{
-    peb.style=`left:${Math.round((Math.random()*(max-min)+min)*unitSize)/unitSize}px;top:${Math.round((Math.random()*(max-min)+min)*unitSize)/unitSize}px;background:${colors[Math.floor(Math.random()*colors.length)]}`
-    })
+   if(!h.classList.contains('goal')){
+      let pebble = [...h.children];
+      pebble.forEach(peb=>{
+      peb.style=`left:${Math.round((Math.random()*(max-min)+min)*unitSize)/unitSize}px;top:${Math.round((Math.random()*(max-min)+min)*unitSize)/unitSize}px;background:${colors[Math.floor(Math.random()*colors.length)]}`
+      })
+   }
+    
     
    })
  
@@ -88,13 +91,9 @@ function movePebbles(event){
    let hola = event.currentTarget;
    let p1Children = [...p1Side.children]
    let p2Children = [...p2Side.children]
-   p1Children.forEach(child => child.style.pointerEvents='none')
+   p1Children.forEach(child => child.style.pointerEvents='auto')
 
-   holesArr.forEach((h,index)=>{
-      if(hola === h){
-         nextHole = holesArr[index+1]
-      }
-   })
+
    // computer's turn
    setTimeout(()=>{
       
@@ -114,12 +113,13 @@ function movePebbles(event){
             // console.log(counter)
             // console.log(index)
             // increment to the next hole
-            nextHole = holesArr[(index+counter)%holesArr.length]
+            nextHole = [...holesArr].filter((x,i)=>i!==13)[(index+counter)%(holesArr.length-1)]
             // append the pebble child in your hand
             nextHole.appendChild(take)
-            // when a pebble is dropped into nextHole
-            
-            
+            if(nextHole.classList.contains('goal')&&nextHole.id!="player-2"){
+               let score = nextHole.children[0]
+               score.textContent=(Number(score.textContent))+1
+            }
             // console.log(nextHole)
             counter++
          }

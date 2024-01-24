@@ -92,6 +92,11 @@ align-items: center;
     box-shadow: inset 0 0 16px .5px #333;
     position:absolute;
     pointer-events: none;
+    background-color: none;
+}
+.goal > h1{
+    font-size:4rem;
+    background-color:none;
 }
 #player-1{
     right:15px;
