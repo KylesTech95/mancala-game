@@ -60,28 +60,28 @@ placePebbles(0,((hole_height+50)/2))
 
 
 
-// pointer events function
-function pointerEventsFn(event){
-   let len = event.target.children.length;
-   let h = event.target
-      // if pebbles are not there set no pointer events
-     if(len < 1){
-      h.style='pointer-events:none'
-     }
-     else{
-      h.style='pointer-events:auto'
-     }
+// // pointer events function
+// function pointerEventsFn(event){
+//    let len = event.target.children.length;
+//    let h = event.target
+//       // if pebbles are not there set no pointer events
+//      if(len < 1){
+//       h.style='pointer-events:none'
+//      }
+//      else{
+//       h.style='pointer-events:auto'
+//      }
 
     
-}
-// Pick a hole to grab pebbles from
-const available_holes = () => {
-   holesArr.forEach((h,i)=>{
-         if(h.id!=='player-1' ){
-            h.addEventListener('mouseenter',pointerEventsFn)
-         }
-   })
-}
+// }
+// // Pick a hole to grab pebbles from
+// const available_holes = () => {
+//    holesArr.forEach((h,i)=>{
+//          if(h.id!=='player-1' ){
+//             h.addEventListener('mouseenter',pointerEventsFn)
+//          }
+//    })
+// }
 
 // drop pebbles function
 function movePebbles(event){
@@ -136,7 +136,6 @@ function movePebbles(event){
             else{
                console.log(i)
                if(i===(len-1)){
-                  console.log('no GOAL')
                   setTimeout(()=>computerTurn(),(600*len)+250)
                   holesArr.forEach(h=>h.style.pointerEvents='none')
                }
@@ -157,11 +156,20 @@ function movePebbles(event){
 // player turn
 function playerTurn(){
    console.log('players turn!')
-   available_holes()
+   // available_holes()
    // if the holes index is greater than player 1 side, set pointer events to none
    holesArr.forEach((h,index)=>{
       if(index>6 && !h.classList.contains('middle')){
          h.style.pointerEvents='none'
+      }
+      else{
+         if(h.children.length>0){
+         h.style.pointerEvents='auto'
+      }
+      else{
+         h.style.pointerEvents='none'
+
+      }
       }
       let length = h.children.length
       if(length>0){
@@ -192,7 +200,6 @@ const getValidHoles = () =>{
 
 // drop pebbles function
 function movePebbles_comp(arr){
-  
    counter=1
    // disable pointer events for player 1 immediately
    holesArr.forEach((h,index)=>{
@@ -210,17 +217,6 @@ function movePebbles_comp(arr){
    let len = pebbles.length
    let hola = arr
 
-   // computer's turn
-   setTimeout(()=>{
-       // enable pointer events for player 1 immediately
-      holesArr.forEach((h,index)=>{
-      if(index<7 && !h.classList.contains('middle')){
-         h.style.pointerEvents='none'
-      }
-     
-   })
-      playerTurn()
-   },(600*len)+250)
    for(let i = 0; i < len; i++){ 
    let lastPebDrop = handgrab[handgrab.length-1]
    setTimeout(()=>{
@@ -246,7 +242,7 @@ function movePebbles_comp(arr){
             // if goal contains handgrab[handgrab.length-1]
             if(nextHole.id==='player-2'){
                let children = [...nextHole.children].filter((_,i)=>i!==0)
-               if(children.includes(lastPebDrop) && handgrab.indexOf(lastPebDrop)== len-1){
+               if(children.includes(lastPebDrop) && handgrab.indexOf(lastPebDrop) == len-1){
                   computerTurn()
                   holesArr.forEach(h=>h.style.pointerEvents='none')
                }
@@ -254,7 +250,6 @@ function movePebbles_comp(arr){
             else{
                console.log(i)
                if(i===(len-1)){
-                  console.log('no GOAL')
                   setTimeout(()=>{
                      playerTurn()
                   },(600*len)+250)
