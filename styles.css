@@ -43,7 +43,7 @@ position:relative;
 /* Divider */
 #divider{
     transform: rotate(90deg);
-    border:2px solid rgb(156, 141, 57);
+    border:2px solid rgb(250, 242, 196);
     background: goldenrod
 }
 /* Player side */
@@ -55,6 +55,9 @@ align-items: center;
 }
 #player-side2{
     flex-direction: row-reverse;
+}
+.goal{
+    position:absolute;
 }
 /* holes */
 .hole{

@@ -1,10 +1,11 @@
-let hole = document.querySelector('.hole')
-let holesArr = document.querySelectorAll('.hole')
+let hole = document.querySelector('.space')
+let holeSize = document.querySelector('.hole')
+let holesArr = document.querySelectorAll('.space')
 let p1Side = document.getElementById('player-side1')
 let p2Side = document.getElementById('player-side2')
 
-let hole_width = hole.clientWidth;
-let hole_height = hole.clientHeight;
+let hole_width = holeSize.clientWidth;
+let hole_height = holeSize.clientHeight;
 let pebblesArr = document.querySelectorAll('.pebble')
 let colors= ['red','orange','yellow','green','blue','purple','indigo','cyan','lime']
 let nextHole;
@@ -13,6 +14,19 @@ let unitSize = 15
 let handgrab = []
 let i = 0;
 let player1Active = true;
+let gameHeight = document.querySelector('#game-border').getBoundingClientRect().height;
+let goals = document.querySelectorAll('.goal') // array 
+
+for(let i in goals){
+   let p1=(goals[i].id==='player-1')
+   let p2=(goals[i].id==='player-2')
+   if(p1){
+      goals[i].style = `top:${gameHeight/10}px`
+   }
+   else{
+      goals[i].style = `bottom:${gameHeight/10}px`
+   }
+}
 
 if(player1Active){
 p1Side.style.pointerEvents='auto'
