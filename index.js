@@ -10,7 +10,7 @@ let hole_height = holeSize.clientHeight;
 let pebblesArr = document.querySelectorAll('.pebble')
 let colors= ['red','orange','yellow','green','blue','purple','indigo','cyan','lime']
 let nextHole;
-let counter = 1;
+let counter;
 let unitSize = 15
 let handgrab = []
 let comphand = []
@@ -64,15 +64,14 @@ function pointerEventsFn(event){
 // Pick a hole to grab pebbles from
 const available_holes = () => {
    holesArr.forEach((h,i)=>{
-      console.log(i)
          h.addEventListener('mouseenter',pointerEventsFn)
    })
 }
 // drop pebbles function
 function movePebbles(event){
-   let pebbles = [...event.target.children];
+   let pebbles = [...event.currentTarget.children];
    let len = pebbles.length
-   let hola = event.target;
+   let hola = event.currentTarget;
    let p1Children = [...p1Side.children]
    let p2Children = [...p2Side.children]
 
@@ -84,7 +83,8 @@ function movePebbles(event){
    })
    // computer's turn
    setTimeout(()=>{
-     p1Children.forEach(child => child.style.pointerEvents='none')
+   //   p2Children.forEach(child => child.style.pointerEvents='none')
+   //   p1Children.forEach(child => child.style.pointerEvents='none')
       computerTurn()
    },(600*len)+250)
    for(let i = 0; i < pebbles.length; i++){ 
@@ -98,15 +98,17 @@ function movePebbles(event){
       holesArr.forEach((h,index)=>{
          // if target === hole
          if(hola === h){
+            console.log(counter)
+            console.log(index)
             // increment to the next hole
-            nextHole = holesArr[index+counter]
+            nextHole = holesArr[(index+counter)%holesArr.length]
             // append the pebble child in your hand
             nextHole.appendChild(take)
             // when a pebble is dropped into nextHole
             // set the hole's pointerEvent to auto
-            nextHole.style.pointerEvents='auto'
+            nextHole.style.pointerEvents='auto';
+            // console.log(nextHole)
             counter++
-            console.log(nextHole)
          }
       })
    },600*i)
