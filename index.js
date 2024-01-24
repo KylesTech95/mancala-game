@@ -1,16 +1,29 @@
 let hole = document.querySelector('.hole')
 let holesArr = document.querySelectorAll('.hole')
 let p1Side = document.getElementById('player-side1')
+let p2Side = document.getElementById('player-side2')
+
 let hole_width = hole.clientWidth;
 let hole_height = hole.clientHeight;
 let pebblesArr = document.querySelectorAll('.pebble')
 let colors= ['red','orange','yellow','green','blue','purple','indigo','cyan','lime']
 let nextHole;
-
+let counter = 1;
 let unitSize = 15
 let handgrab = []
 let i = 0;
+let player1Active = true;
 
+if(player1Active){
+p1Side.style.pointerEvents='auto'
+p2Side.style.pointerEvents='none'
+}
+else{
+p2Side.style.pointerEvents='auto '
+p1Side.style.pointerEvents='none'
+
+
+}
 
 // Place your pebbles in your perspective holes
 const placePebbles = (min,max) => {
@@ -42,7 +55,7 @@ function pointerEventsFn(event){
 // Pick a hole to grab pebbles from
 const available_holes = () => {
    holesArr.forEach(h=>{
-      h.addEventListener('mouseleave',pointerEventsFn)
+      // h.addEventListener('mouseleave',pointerEventsFn)
       h.addEventListener('mouseenter',pointerEventsFn)
    })
 }
@@ -56,16 +69,34 @@ function movePebbles(event){
          nextHole = holesArr[index+1]
       }
    })
-   for(let i = 0; i < pebbles.length; i++){
+   for(let i = 0; i < pebbles.length; i++){ 
    setTimeout(()=>{
+      // grab all you pebbles to see what you have in the console
       handgrab.push(pebbles[i])
+      console.log(handgrab)
+      // remove each pebble from its hole and put it in your 
       let take = hola.removeChild(pebbles[i])
-      nextHole.appendChild(take)
+      holesArr.forEach((h,index)=>{
+         // if target === hole
+         if(hola === h){
+            // increment to the next hole
+            nextHole = holesArr[index+counter]
+            // append the pebble child in your hand
+            nextHole.appendChild(take)
+            // when a pebble is dropped into nextHole
+            // set the hole's pointerEvent to auto
+            nextHole.style.pointerEvents='auto'
+            counter++
+            computerTurn()
+         }
+      })
    },600*i)
+   // reset counter and handgrab
+   counter=1
+   handgrab=[]
    }
    }
 holesArr.forEach((h,index)=>{
-   console.log(index)
    let length = h.children.length
    if(length>0){
    // click on hole with aleast 1 pebble

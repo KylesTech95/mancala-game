@@ -78,6 +78,7 @@ align-items: center;
     border-radius: 50%;
     position:absolute;
     border:2px solid #333;
+    transition:.5s;
 }
 /*player goals*/
 .goal{
