@@ -1,0 +1,77 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+body{
+    background:silver;
+}
+
+
+/*Game container*/
+#game-container{
+    width: 100%;
+    height:100vh;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/*Game border*/
+/*background image*/
+#game-border{
+background-image:url('./media/wooden.webp');
+background-repeat: none;
+background-size:cover;
+height:66%;
+/* background-color: rgb(139, 104, 57);
+background-blend-mode:luminosity; */
+width:90%;
+margin:0 auto;
+border:4px solid #333;
+border-radius: 50px;
+display:flex;
+flex-direction: column;
+justify-content: center;
+overflow:hidden;
+gap: 5rem;
+position:relative;
+}
+/* Divider */
+#divider{
+    transform: rotate(90deg);
+    border:2px solid rgb(156, 141, 57);
+    background: goldenrod
+}
+/* Player side */
+.playerside{
+width: 100%;
+display:flex;
+justify-content: center;
+align-items: center;
+}
+/* holes */
+.hole{
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    margin:0 1.25rem;
+    box-shadow: inset 0 0 18px 2px #333;
+}
+/*player goals*/
+.goal{
+    height:80%;
+    width: 100px;
+    border-radius: 12px;
+    box-shadow: inset 0 0 16px .5px #333;
+    position:absolute;
+}
+#player-1{
+    right:5px;
+}
+#player-2{
+    left:5px;
+}
+
