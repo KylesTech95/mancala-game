@@ -108,7 +108,10 @@ function movePebbles(event){
             nextHole.appendChild(take)
             // when a pebble is dropped into nextHole
             // set the hole's pointerEvent to auto
-            nextHole.style.pointerEvents='auto';
+            if(!nextHole.classList.contains('goal')){
+               nextHole.style.pointerEvents='auto';
+            }
+            
             // console.log(nextHole)
             counter++
          }
