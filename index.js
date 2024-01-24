@@ -16,9 +16,15 @@ let handgrab = []
 let comphand = []
 let compRound = []
 let i = 0;
+let gameBorder = document.querySelector('#game-border')
+let bg_colors = ['ghostWhite','silver','navy','none','red']
 let gameHeight = document.querySelector('#game-border').getBoundingClientRect().height;
 let goals = document.querySelectorAll('.goal') // array 
 
+// window onload to change game board color
+window.addEventListener('load',e=>{
+   gameBorder.style=`background-color:${bg_colors[Math.floor(Math.random()*bg_colors.length)]}`
+})
 for(let i in goals){
    let p1=(goals[i].id==='player-1')
    let p2=(goals[i].id==='player-2')
