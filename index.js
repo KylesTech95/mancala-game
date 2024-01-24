@@ -74,6 +74,7 @@ const available_holes = () => {
          }
    })
 }
+
 // drop pebbles function
 function movePebbles(event){
    // disable pointer events for player 1 immediately
@@ -94,11 +95,6 @@ function movePebbles(event){
    // p1Children.forEach(child => child.style.pointerEvents='auto')
 
 
-   // computer's turn
-   setTimeout(()=>{
-      
-      computerTurn()
-   },(600*len)+250)
    for(let i = 0; i < pebbles.length; i++){ 
    setTimeout(()=>{
       // grab all you pebbles to see what you have in the console
@@ -106,7 +102,7 @@ function movePebbles(event){
       // console.log(handgrab)
       // remove each pebble from its hole and put it in your 
       let take = hola.removeChild(pebbles[i])
-      let lastPebDrop = take[take.length-1]
+      let lastPebDrop = handgrab[handgrab.length-1]
       holesArr = [...holesArr].filter((h,i)=>!h.classList.contains('middle'))
       holesArr.forEach((h,index)=>{
          // if target === hole
@@ -121,12 +117,19 @@ function movePebbles(event){
                let score = nextHole.children[0]
                score.textContent=(Number(score.textContent))+1
             }
+            // what happens if player pebbles end in goal?
             // if(nextHole.id=="player-1"){
-            //    if([...handgrab.children].includes(lastPebDrop)){
+            //    let goal1 = document.querySelector('#player-1');
+            //    let lastChild = [...goal1.children][goal1.children.length-1]
+            //    console.log(lastChild)
+            //    console.log(lastPebDrop)
+            //    if(lastChild===lastPebDrop){
+            //       console.log('yaaas')
             //       playerTurn()
+            //       holesArr.forEach((x,i)=>x.style.pointerEvents='auto')
             //    }
             // }
-            // console.log(nextHole)
+            
             counter++
          }
       })
@@ -135,9 +138,14 @@ function movePebbles(event){
    counter=1;
    handgrab=[]
    }
+      // computer's turn
+      setTimeout(()=>{
+         computerTurn()
+      },(600*len)+250) 
    }
 // player turn
 function playerTurn(){
+   console.log('players turn!')
    available_holes()
    // if the holes index is greater than player 1 side, set pointer events to none
    holesArr.forEach((h,index)=>{
