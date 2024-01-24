@@ -42,7 +42,28 @@ const available_holes = () => {
    holesArr.forEach(h=>{
       h.addEventListener('mouseleave',pointerEventsFn)
       h.addEventListener('mouseenter',pointerEventsFn)
-   })g
+   })
 }
 available_holes()
 
+// drop pebbles function
+function dropPebbles(event){
+   let hola = event.target;
+   console.log(hola)
+   let pebbles = [...event.target.children];
+   // console.log(pebbles)
+   for(let i = 0; i < pebbles.length; i++){
+   setTimeout(()=>{
+      handgrab.push(pebbles[i])
+      hola.removeChild(pebbles[i])
+      // console.log(handgrab)
+   },600*i)
+   }
+   }
+// click on hole with aleast 1 pebble
+holesArr.forEach(h=>{
+   let len = h.children.length;
+   if(len > 0){
+      h.addEventListener('click', dropPebbles)
+   }  
+})
