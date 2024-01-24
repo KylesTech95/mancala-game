@@ -15,11 +15,14 @@ let unitSize = 15
 let handgrab = []
 let comphand = []
 let compRound = []
+let longtermStorage = []
 let i = 0;
 let gameBorder = document.querySelector('#game-border')
 let bg_colors = ['ghostWhite','silver','navy','none','red']
 let gameHeight = document.querySelector('#game-border').getBoundingClientRect().height;
 let goals = document.querySelectorAll('.goal') // array 
+
+
 
 // window onload to change game board color
 window.addEventListener('load',e=>{
@@ -101,7 +104,7 @@ function movePebbles(event){
    // p1Children.forEach(child => child.style.pointerEvents='auto')
 
 
-   for(let i = 0; i < pebbles.length; i++){ 
+   for(let i = 0; i < len; i++){ 
    setTimeout(()=>{
       // grab all you pebbles to see what you have in the console
       handgrab.push(pebbles[i])
@@ -109,6 +112,7 @@ function movePebbles(event){
       // remove each pebble from its hole and put it in your 
       let take = hola.removeChild(pebbles[i])
       let lastPebDrop = handgrab[handgrab.length-1]
+          longtermStorage.push(lastPebDrop)
       holesArr = [...holesArr].filter((h,i)=>!h.classList.contains('middle'))
       holesArr.forEach((h,index)=>{
          // if target === hole
@@ -123,19 +127,6 @@ function movePebbles(event){
                let score = nextHole.children[0]
                score.textContent=(Number(score.textContent))+1
             }
-            // what happens if player pebbles end in goal?
-            // if(nextHole.id=="player-1"){
-            //    let goal1 = document.querySelector('#player-1');
-            //    let lastChild = [...goal1.children][goal1.children.length-1]
-            //    console.log(lastChild)
-            //    console.log(lastPebDrop)
-            //    if(lastChild===lastPebDrop){
-            //       console.log('yaaas')
-            //       playerTurn()
-            //       holesArr.forEach((x,i)=>x.style.pointerEvents='auto')
-            //    }
-            // }
-            
             counter++
          }
       })
@@ -144,11 +135,21 @@ function movePebbles(event){
    counter=1;
    handgrab=[]
    }
-      // computer's turn
-      setTimeout(()=>{
+   let goal1 = document.querySelector('#player-1');
+   let lastChild = [...goal1.children][goal1.children.length-1]
+      // what happens if player pebbles end in goal?
+      if(lastChild===longtermStorage[longtermStorage.length-1]){
+         console.log('FUCK YES')
+         playerTurn()
+         holesArr.forEach((x,i)=>x.style.pointerEvents='auto')
+      }
+      else{
          computerTurn()
-      },(600*len)+250) 
-   }
+      }
+
+   
+}
+      
 // player turn
 function playerTurn(){
    console.log('players turn!')
