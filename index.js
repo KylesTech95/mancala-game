@@ -1,9 +1,11 @@
 let hole = document.querySelector('.hole')
 let holesArr = document.querySelectorAll('.hole')
+let p1Side = document.getElementById('player-side1')
 let hole_width = hole.clientWidth;
 let hole_height = hole.clientHeight;
 let pebblesArr = document.querySelectorAll('.pebble')
 let colors= ['red','orange','yellow','green','blue','purple','indigo','cyan','lime']
+let nextHole;
 
 let unitSize = 15
 let handgrab = []
@@ -45,25 +47,28 @@ const available_holes = () => {
    })
 }
 available_holes()
-
-// drop pebbles function
-function dropPebbles(event){
-   let hola = event.target;
-   console.log(hola)
+// // drop pebbles function
+function movePebbles(event){
    let pebbles = [...event.target.children];
-   // console.log(pebbles)
+   let hola = event.target;
+   holesArr.forEach((h,index)=>{
+      if(hola === h){
+         nextHole = holesArr[index+1]
+      }
+   })
    for(let i = 0; i < pebbles.length; i++){
    setTimeout(()=>{
       handgrab.push(pebbles[i])
-      hola.removeChild(pebbles[i])
-      // console.log(handgrab)
+      let take = hola.removeChild(pebbles[i])
+      nextHole.appendChild(take)
    },600*i)
    }
    }
-// click on hole with aleast 1 pebble
-holesArr.forEach(h=>{
-   let len = h.children.length;
-   if(len > 0){
-      h.addEventListener('click', dropPebbles)
-   }  
+holesArr.forEach((h,index)=>{
+   console.log(index)
+   let length = h.children.length
+   if(length>0){
+   // click on hole with aleast 1 pebble
+   h.addEventListener('click',movePebbles)
+   }
 })

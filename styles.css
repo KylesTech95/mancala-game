@@ -53,6 +53,9 @@ display:flex;
 justify-content: center;
 align-items: center;
 }
+#player-side2{
+    flex-direction: row-reverse;
+}
 /* holes */
 .hole{
     width: 125px;
