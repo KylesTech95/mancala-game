@@ -151,13 +151,13 @@ span{
         margin: -.5rem 0;
     }
     #player-1{
-        right:-15px;
-        transform:translate(0,40px)
+        right:4px;
+        transform:translate(0,45px)
 
     }
     #player-2{
-        left:-15px;
-        transform:translate(0,-40px)
+        left:4px;
+        transform:translate(0,-45px)
     }
     
     .pebble{
@@ -166,7 +166,7 @@ span{
     }
     .goal{
        width:60px;
-       height:150px;
+       height:140px;
     }
     
     #game-border{
