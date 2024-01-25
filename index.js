@@ -141,6 +141,9 @@ function movePebbles(event){
       
 // player turn
 function playerTurn(){
+   if(checkEmptySpaces()){
+      compareScores()
+   }  
    console.log('players turn!')
    // available_holes()
    // if the holes index is greater than player 1 side, set pointer events to none
@@ -155,9 +158,6 @@ function playerTurn(){
       h.addEventListener('click',movePebbles)
       }
    })
-   if(checkEmptySpaces()){
-      compareScores()
-   }
 }
 playerTurn()
 
@@ -181,6 +181,11 @@ const getValidHoles = () =>{
 
 // drop pebbles function
 function movePebbles_comp(arr){
+   if(arr === undefined){
+      if(checkEmptySpaces()){
+         compareScores()
+      }  
+   }
    counter=1
    // disable pointer events for player 1 immediately
    holesArr.forEach((h,index)=>{
@@ -251,6 +256,7 @@ movePebbles_comp(pick)
 }
 // computer turn
 function computerTurn(){
+   
    handgrab=[]
    counter=0;
    let computerHoles = getValidHoles()
@@ -259,12 +265,11 @@ function computerTurn(){
          h.style.pointerEvents='none'
          compRound.push(h)
        }
-       let randomPick = compRound[Math.floor(Math.random()*compRound.length)]
+       let randomPick = compRound[Math.floor(Math.random()*compRound.length)] || undefined
        computerPicksHole(randomPick)
          compRound.splice(compRound.indexOf(randomPick),1)
          console.log(compRound)
          compRound=[]
-
 }
 
 
