@@ -7,6 +7,9 @@
 body{
     background:silver;
     overflow: hidden;
+    -o-overflow:hidden;
+    -moz-overflow:hidden;
+    -webkit-overflow:hidden;
 }
 /*Display*/
 #display{
@@ -23,6 +26,7 @@ margin-bottom: 2.5rem;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-bottom:1.75rem;
 }
 
 /*Game border*/
@@ -123,8 +127,8 @@ span{
 @media screen and (max-height: 400px) and (max-width: 950px){
     #game-container{
         width:100%;
-        transform:scale(.75);
-        transform:translate(0,-10px)
+        /* transform:translate(0,-10px); */
+        padding-bottom:.5rem;
     }
     .hole{
         width: 75px;
@@ -147,5 +151,8 @@ span{
     }
     .goal{
         width:70px;
+    }
+    #game-border{
+        width: 95vw;
     }
 }
