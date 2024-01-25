@@ -130,6 +130,53 @@ span{
 
 
 
+@media screen and (max-height: 950px) and (max-width: 400px){
+    #game-container{
+        /* transform:translate(0,-10px); */
+        padding-bottom:.5rem;
+    }
+    .hole{
+        width: 60px;
+        height: 60px;
+        margin:0 .25rem;
+    }
+    #display{
+        margin-bottom:1rem;
+    }
+    #player-side1{
+        margin: -.5rem 0;
+    }
+    #player-side2{
+        margin: -.5rem 0;
+    }
+    #player-1{
+        right:-15px;
+    }
+    #player-2{
+        left:-15px;
+    }
+    
+    .pebble{
+        height:12px;
+        width:12px;
+    }
+    .goal{
+
+        transform:scale(.5);
+    }
+    #game-border{
+        width: 100vw;
+        height:300px;
+    }
+    #display{
+        position:relative;
+        z-index:999;
+        opacity:.60;
+        font-size: 35px;
+    }
+}
+
+
 @media screen and (max-height: 400px) and (max-width: 950px){
     #game-container{
         width:100%;
