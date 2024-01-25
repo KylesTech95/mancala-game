@@ -160,9 +160,9 @@ function movePebbles(event){
             return [...holesArr].filter((x,i)=> i<6).forEach((h,index)=>{
                setTimeout(()=>{
                h.classList.remove('glow')
-               },400)
+               },250)
             })
-         },600*(index+1))
+         },275*(index+1))
          
          setTimeout(()=>{
             [...holesArr].filter((x,i)=>i < 6).forEach((h,index)=>{
