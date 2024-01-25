@@ -55,21 +55,9 @@ const compareScores = () => {
    }
 
    gameStarted = false;
-   
 
-   if(playerEmpty&&compEmpty){
       return +playerScore.textContent > +compScore.textContent ? display.textContent = 'Player Wins!' : +playerScore.textContent < +compScore.textContent ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
-   }
-   else if (playerEmpty && !compEmpty){
-      reduceRes = leftOver.reduce((a,b)=>a+b)
-      (compScore.textContent) = Number(compScore.textContent)  + reduceRes
-      return +playerScore.textContent > +compScore.textContent ? display.textContent = 'Player Wins!' : +playerScore.textContent < +compScore.textContent ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
-   }
-   else{
-      reduceRes = leftOver.reduce((a,b)=>a+b)
-      (playerScore.textContent) = Number(playerScore.textContent)  + reduceRes
-      return +playerScore.textContent > +compScore.textContent ? display.textContent = 'Player Wins!' : +playerScore.textContent < +compScore.textContent ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
-   }
+   
 
 }
 if(checkEmptySpaces()){
@@ -323,7 +311,7 @@ function movePebbles_comp(arr){
                   }
                   else{
                      display.textContent = "Your turn";
-                     setTimeout(()=>playerTurn(),250)
+                     setTimeout(()=>playerTurn("Your turn"),250)
                      holesArr.filter((x,i)=>i < 6).forEach(h=>h.style.pointerEvents='auto')
                   }
                   
