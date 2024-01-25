@@ -5,6 +5,7 @@ let p1Side = document.getElementById('player-side1')
 let p2Side = document.getElementById('player-side2')
 let goalWidth = document.querySelector('#player-1').clientWidth
 let goalHeight = document.querySelector('#player-1').clientHeight
+let display = document.querySelector('#display')
 let hole_width = holeSize.clientWidth;
 let hole_height = holeSize.clientHeight;
 let pebblesArr = document.querySelectorAll('.pebble')
@@ -35,7 +36,7 @@ const compareScores = () => {
    playerScore = +document.querySelector('#player-1 > h1').textContent
    compScore = +document.querySelector('#player-2 > h1').textContent
 
-   return playerScore > compScore ? console.log('Player Wins!') : playerScore < compScore ? console.log('Computer Wins!') : console.log('TIE!')
+   return playerScore > compScore ? display.textContent = 'Player Wins!' : playerScore < compScore ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
 }
 if(checkEmptySpaces()){
    compareScores()
