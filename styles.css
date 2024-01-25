@@ -15,7 +15,7 @@ body{
 
 #instructions-actual{
     height: 100%;
-    margin: .75rem 0;
+    margin:f .75rem 0;
     margin-top:3rem;
     display:flex;
     flex-direction: column;
@@ -237,6 +237,9 @@ span{
     #instructions{
     position:absolute;
     top:90px;
+    }
+    #instructions-actual{
+    overflow: auto;
     }
 }
 
