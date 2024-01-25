@@ -95,6 +95,9 @@ background-size:cover;
 height:66%;
 /* background-color: rgb(139, 104, 57);*/
 background-blend-mode:luminosity;
+-webkit-background-blend-mode:luminosity;
+-o-background-blend-mode: luminosity;
+-moz-background-blend-mode: luminosity;
 width:90%;
 margin:0 auto;
 border:4px solid #333;
