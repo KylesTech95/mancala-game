@@ -22,6 +22,7 @@ let bg_colors = ['ghostWhite','silver','navy','none','red']
 let gameHeight = document.querySelector('#game-border').getBoundingClientRect().height;
 let goals = document.querySelectorAll('.goal') // array 
 let playerScore, compScore
+let gameStarted = false;
 
 
 // Check if player spaces are empty
@@ -33,6 +34,7 @@ const checkEmptySpaces = () => {
 }
 // compare scores
 const compareScores = () => {
+   gameStarted = false;
    playerScore = +document.querySelector('#player-1 > h1').textContent
    compScore = +document.querySelector('#player-2 > h1').textContent
 
@@ -123,7 +125,7 @@ function movePebbles(event){
                      compareScores()
                   }
                   else{
-                  playerTurn()
+                  playerTurn('Nice! Move Again')
                   holesArr.filter((x,i)=>i<6).forEach(h=>h.style.pointerEvents='auto')
                   }   
                 }
@@ -131,7 +133,7 @@ function movePebbles(event){
             else{
                console.log(i)
                if(i===(len-1)){  
-               setTimeout(()=>computerTurn(),(600*len)+250)
+                setTimeout(()=>computerTurn("Computer's turn"),250)
                holesArr.forEach(h=>h.style.pointerEvents='none')
                }
             }
@@ -147,9 +149,41 @@ function movePebbles(event){
 
    
 }
+// indicate when player must to play
+   const playerIndicator = () => {
       
+      [...holesArr].filter((x,i)=>i < 6).forEach((h,index)=>{
+         h.style.pointerEvents='none'
+
+         setTimeout(()=>{
+            h.classList.add('glow')
+            return [...holesArr].filter((x,i)=> i<6).forEach((h,index)=>{
+               setTimeout(()=>{
+               h.classList.remove('glow')
+               },400)
+            })
+         },600*(index+1))
+         
+         setTimeout(()=>{
+            [...holesArr].filter((x,i)=>i < 6).forEach((h,index)=>{
+               h.style.pointerEvents='auto'
+            })
+         },4500)
+      })
+   } 
 // player turn
-function playerTurn(){
+function playerTurn(text){
+   if(!gameStarted){
+      playerIndicator()
+      gameStarted = true;
+   }
+   if(text){
+      display.textContent = text;
+   }
+   else{
+      display.textContent = 'Your turn';
+   }
+   
    if(checkEmptySpaces()){
       compareScores()
    }
@@ -234,7 +268,7 @@ function movePebbles_comp(arr){
             }
             let children = [...nextHole.children].filter((_,i)=>i!==0)
             if(nextHole.id==='player-2' && counter==(len-1)&&!checkEmptySpaces()){
-                  setTimeout(()=>computerTurn(),(600*len)+250)
+                  setTimeout(()=>computerTurn("Computer Moves Again"),(600*len)+250)
                   holesArr.filter((x,i)=>i<7).forEach(h=>h.style.pointerEvents='none')
                }
             else if(nextHole.id==='player-2' && counter==(len-1)&&checkEmptySpaces()){
@@ -244,7 +278,8 @@ function movePebbles_comp(arr){
             else{
                console.log(counter)
                if(counter===(len-1)){
-                     setTimeout(()=>playerTurn(),(600*len)+250)
+                  display.textContent = "Your turn";
+                     setTimeout(()=>playerTurn(),250)
                      holesArr.filter((x,i)=>i < 6).forEach(h=>h.style.pointerEvents='auto')
                
                }
@@ -267,7 +302,14 @@ movePebbles_comp(pick)
 
 
 // computer turn
-function computerTurn(){
+function computerTurn(text){
+   if(text){
+      // setTimeout(()=>display.textContent=text,300)
+      display.textContent = text;
+   }
+   else{
+      display.textContent = "Computer's turn";
+   }
    handgrab=[]
    counter=0;
    if(checkEmptySpaces()){
