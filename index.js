@@ -24,7 +24,8 @@ let goals = document.querySelectorAll('.goal') // array
 let playerScore, compScore
 let gameStarted = false;
 let instructionsBtn = document.getElementById('instructions-container')
-
+let leftOverArr=[]
+let reduceRes;
 // instructions appear/shrink
 function appear(){
    console.log('approved')
@@ -39,11 +40,35 @@ const checkEmptySpaces = () => {
 }
 // compare scores
 const compareScores = () => {
+   let p1 = [...holesArr].filter((h,i)=>i < 6);
+   let comp = [...holesArr].filter((h,i)=> i > 6 && i < 13)
+   let playerEmpty = p1.filter((_,i)=>_.children.length > 0).length < 1
+   let compEmpty = comp.filter((_,i)=>_.children.length > 0).length < 1
+   
+   
+   let leftOver = [...holesArr].filter((x,i)=>x.children.length > 1).forEach(h => {
+      let pebs = [...h.children]
+      leftOverArr.push(pebs)
+   })
+
    gameStarted = false;
    playerScore = +document.querySelector('#player-1 > h1').textContent
    compScore = +document.querySelector('#player-2 > h1').textContent
 
-   return playerScore > compScore ? display.textContent = 'Player Wins!' : playerScore < compScore ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
+   if(playerEmpty&&compEmpty){
+      return playerScore > compScore ? display.textContent = 'Player Wins!' : playerScore < compScore ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
+   }
+   else if (playerEmpty && !compEmpty){
+      reduceRes = leftOver.reduce((a,b)=>a+b,0)
+      compScore += reduceRes
+      return playerScore > compScore ? display.textContent = 'Player Wins!' : playerScore < compScore ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
+   }
+   else{
+      reduceRes = leftOver.reduce((a,b)=>a+b,0)
+      playerScore += reduceRes
+      return playerScore > compScore ? display.textContent = 'Player Wins!' : playerScore < compScore ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
+   }
+
 }
 if(checkEmptySpaces()){
    compareScores()
@@ -156,8 +181,8 @@ function movePebbles(event){
 }
 // indicate when player must to play
    const playerIndicator = () => {
-      
-      [...holesArr].filter((x,i)=>i < 6).forEach((h,index)=>{
+       leftOverArr = []
+      return [...holesArr].filter((x,i)=>i < 6).forEach((h,index)=>{
          h.style.pointerEvents='none'
 
          setTimeout(()=>{
@@ -186,11 +211,11 @@ function playerTurn(text){
       },2750)
       gameStarted = true;
    }
-   else if(gameStarted){
+   else if(gameStarted && goals.forEach(c=>+c[0] < 1)){
       display.textContent = 'Your turn';
    }
    else{
-      display.textContent =  'text'
+      display.textContent =  text
    }
    
    if(checkEmptySpaces()){
