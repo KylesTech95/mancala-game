@@ -20,9 +20,23 @@ let gameBorder = document.querySelector('#game-border')
 let bg_colors = ['ghostWhite','silver','navy','none','red']
 let gameHeight = document.querySelector('#game-border').getBoundingClientRect().height;
 let goals = document.querySelectorAll('.goal') // array 
+let playerScore, compScore
 
 
+// Check if player spaces are empty
+const checkEmptySpaces = () => {
+   let p1 = [...holesArr].filter((h,i)=>i < 6);
+   let comp = [...holesArr].filter((h,i)=> i > 6 && i < 13)
+   let isEmpty = p1.filter((_,i)=>_.children.length > 0).length < 1;
+   return isEmpty
+}
+// compare scores
+const compareScores = () => {
+   playerScore = +document.querySelector('#player-1 > h1').textContent
+   compScore = +document.querySelector('#player-2 > h1').textContent
 
+   return playerScore > compScore ? console.log('Player Wins!') : playerScore < compScore ? console.log('Computer Wins!') : console.log('TIE!')
+}
 // window onload to change game board color
 window.addEventListener('load',e=>{
    gameBorder.style=`background-color:${bg_colors[Math.floor(Math.random()*bg_colors.length)]}`
@@ -37,7 +51,6 @@ for(let i in goals){
       goals[i].style = `bottom:${gameHeight/10}px`
    }
 }
-
 // Place pebbles in their perspective holes
 const placePebbles = (min,max,type) => {
    holesArr.forEach(h =>{
@@ -55,33 +68,6 @@ const placePebbles = (min,max,type) => {
 }
 placePebbles(0,((hole_width+50)/2))
 placePebbles(0,((hole_height+50)/2))
-
-
-
-
-
-// // pointer events function
-// function pointerEventsFn(event){
-//    let len = event.target.children.length;
-//    let h = event.target
-//       // if pebbles are not there set no pointer events
-//      if(len < 1){
-//       h.style='pointer-events:none'
-//      }
-//      else{
-//       h.style='pointer-events:auto'
-//      }
-
-    
-// }
-// // Pick a hole to grab pebbles from
-// const available_holes = () => {
-//    holesArr.forEach((h,i)=>{
-//          if(h.id!=='player-1' ){
-//             h.addEventListener('mouseenter',pointerEventsFn)
-//          }
-//    })
-// }
 
 // drop pebbles function
 function movePebbles(event){
@@ -162,21 +148,16 @@ function playerTurn(){
       if(index>6 && !h.classList.contains('middle')){
          h.style.pointerEvents='none'
       }
-      else{
-         if(h.children.length>0){
-         h.style.pointerEvents='auto'
-      }
-      else{
-         h.style.pointerEvents='none'
-
-      }
-      }
+      
       let length = h.children.length
       if(length>0){
       // click on hole with aleast 1 pebble
       h.addEventListener('click',movePebbles)
       }
    })
+   if(checkEmptySpaces()){
+      compareScores()
+   }
 }
 playerTurn()
 
@@ -285,3 +266,5 @@ function computerTurn(){
          compRound=[]
 
 }
+
+
