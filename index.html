@@ -9,7 +9,18 @@
 <body>
 
     <section id="game-container">
-        <h1 id="display">Mancala</h1>
+
+        <div id="display-container">
+            <h1 id="display"></h1> 
+        </div>
+        <button id="instructions" onclick="appear()">Instructions</button>
+
+        <div id="instructions-container" class="shrink-instructions">
+            <div id="instructions-actual">
+                <h1>hello these are the instructions</h1>
+            </div>
+        </div>
+        
         <div id="game-border">
             <div id="player-side1" class="playerside">
                 <span class="hole space">

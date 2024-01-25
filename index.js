@@ -23,8 +23,13 @@ let gameHeight = document.querySelector('#game-border').getBoundingClientRect().
 let goals = document.querySelectorAll('.goal') // array 
 let playerScore, compScore
 let gameStarted = false;
+let instructionsBtn = document.getElementById('instructions-container')
 
-
+// instructions appear/shrink
+function appear(){
+   console.log('approved')
+   instructionsBtn.classList.toggle('appear-instructions')
+}
 // Check if player spaces are empty
 const checkEmptySpaces = () => {
    let p1 = [...holesArr].filter((h,i)=>i < 6);
@@ -168,20 +173,24 @@ function movePebbles(event){
             [...holesArr].filter((x,i)=>i < 6).forEach((h,index)=>{
                h.style.pointerEvents='auto'
             })
-         },4500)
+         },3000)
       })
    } 
 // player turn
 function playerTurn(text){
    if(!gameStarted){
       playerIndicator()
+      display.textContent = 'Welcome to Mancala';  
+      setTimeout(()=>{
+         display.textContent = 'Your turn';  
+      },2750)
       gameStarted = true;
    }
-   if(text){
-      display.textContent = text;
+   else if(gameStarted){
+      display.textContent = 'Your turn';
    }
    else{
-      display.textContent = 'Your turn';
+      display.textContent =  'text'
    }
    
    if(checkEmptySpaces()){

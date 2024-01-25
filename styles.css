@@ -11,12 +11,53 @@ body{
     -moz-overflow:hidden;
     -webkit-overflow:hidden;
 }
+
+#instructions-container{
+    position:absolute;
+    width: 100vw;
+    height: 100vh;
+    border:3px solid red;
+    background:#333;
+    z-index:998;
+    top:0;
+    display:flex;
+    flex-direction: center;
+    align-items:Center;
+    justify-content: center;
+    transition:.25s;
+}
+.shrink-instructions{
+    transform:scale(0);
+    transition:.25s;
+}
+.appear-instructions{
+    transform:scale(1);
+    transition:.25s;
+}
+#instructions{
+    z-index:999;
+    opacity:.75;
+    font-size: 22px;
+    padding: .25rem;
+    border-radius: 12px;
+    margin-bottom: .5rem;
+    border:none;
+}
+#instructions-actual{
+    color:#fff;
+}
 /*Display*/
-#display{
+#display-container{
 width: 100%;
+margin-bottom: 2.5rem;
+display:flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+#display{
 font-size:40px;
 text-align: center;
-margin-bottom: 2.5rem;
 }
 /*Game container*/
 #game-container{
@@ -173,11 +214,13 @@ span{
         width: 100vw;
         height:300px;
     }
-    #display{
+    #display-container{
         position:relative;
-        z-index:999;
+        z-index:997;
         opacity:.60;
         font-size: 35px;
+    
+
     }
 }
 
@@ -194,7 +237,7 @@ span{
         height: 75px;
         margin:0 .5rem;
     }
-    #display{
+    #display-container{
         margin-bottom:1rem;
     }
     #player-side1{
@@ -214,9 +257,9 @@ span{
     #game-border{
         width: 95vw;
     }
-    #display{
+    #display-container{
         position:absolute;
-        z-index:999;
+        z-index:998;
         opacity:.60;
         font-size: 35px;
     }
