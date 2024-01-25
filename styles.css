@@ -231,13 +231,21 @@ span{
         z-index:997;
         opacity:.60;
         font-size: 35px;
-    
-
+    }
+    #instructions{
+    position:absolute;
+    top:90px;
     }
 }
 
 
 @media screen and (max-height: 400px) and (max-width: 950px){
+    #instructions-actual{
+    overflow: auto;
+    scroll-behavior: smooth;
+    width: 85vw;
+    height: 75vh;
+    }
     #game-container{
         width:100%;
         /* transform:translate(0,-10px); */
