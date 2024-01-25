@@ -27,7 +27,7 @@ let playerScore, compScore
 const checkEmptySpaces = () => {
    let p1 = [...holesArr].filter((h,i)=>i < 6);
    let comp = [...holesArr].filter((h,i)=> i > 6 && i < 13)
-   let isEmpty = p1.filter((_,i)=>_.children.length > 0).length < 1;
+   let isEmpty = (p1.filter((_,i)=>_.children.length > 0).length < 1 || comp.filter((_,i)=>_.children.length > 0).length < 1);
    return isEmpty
 }
 // compare scores
@@ -149,20 +149,26 @@ function movePebbles(event){
       
 // player turn
 function playerTurn(){
-   console.log('players turn!')
-   // available_holes()
-   // if the holes index is greater than player 1 side, set pointer events to none
-   holesArr.forEach((h,index)=>{
-      if(index>6 && !h.classList.contains('middle')){
-         h.style.pointerEvents='none'
-      }
-      
-      let length = h.children.length
-      if(length>0){
-      // click on hole with aleast 1 pebble
-      h.addEventListener('click',movePebbles)
-      }
-   })
+   if(checkEmptySpaces()){
+      compareScores()
+   }
+   else{
+      console.log('players turn!')
+      // available_holes()
+      // if the holes index is greater than player 1 side, set pointer events to none
+      holesArr.forEach((h,index)=>{
+         if(index>6 && !h.classList.contains('middle')){
+            h.style.pointerEvents='none'
+         }
+         
+         let length = h.children.length
+         if(length>0){
+         // click on hole with aleast 1 pebble
+         h.addEventListener('click',movePebbles)
+         }
+      })
+   }
+   
 }
 playerTurn()
 
@@ -184,7 +190,7 @@ const getValidHoles = () =>{
    return arr
 }
 
-// drop pebbles function
+// drop pebbles function for computer
 function movePebbles_comp(arr){
    counter=1
    // disable pointer events for player 1 immediately
@@ -226,20 +232,19 @@ function movePebbles_comp(arr){
                score.textContent=(Number(score.textContent))+1
             }
             let children = [...nextHole.children].filter((_,i)=>i!==0)
-            if(nextHole.id==='player-2' && counter==(len-1)){
+            if(nextHole.id==='player-2' && counter==(len-1)&&!checkEmptySpaces()){
                   setTimeout(()=>computerTurn(),(600*len)+250)
+                  holesArr.filter((x,i)=>i<7).forEach(h=>h.style.pointerEvents='none')
+               }
+            else if(nextHole.id==='player-2' && counter==(len-1)&&checkEmptySpaces()){
+                  compareScores()
                   holesArr.filter((x,i)=>i<7).forEach(h=>h.style.pointerEvents='none')
                }
             else{
                console.log(counter)
-               if(i===(len-1)){
-                  if(checkEmptySpaces()){
-                     compareScores()
-                  }
-                  else{
+               if(counter===(len-1)){
                      setTimeout(()=>playerTurn(),(600*len)+250)
-                     holesArr.forEach(h=>h.style.pointerEvents='auto')
-                  }
+                     holesArr.filter((x,i)=>i < 6).forEach(h=>h.style.pointerEvents='auto')
                
                }
                
@@ -256,29 +261,32 @@ function movePebbles_comp(arr){
    }
 // computer picks a valid hole
 function computerPicksHole(pick){
-
 movePebbles_comp(pick)
 }
+
+
 // computer turn
 function computerTurn(){
    handgrab=[]
    counter=0;
-   let computerHoles = getValidHoles()
-       for(let i = 0; i < computerHoles.length; i++){
-         let h = computerHoles[i]
-         h.style.pointerEvents='none'
-         compRound.push(h)
-       }
-       let randomPick = compRound[Math.floor(Math.random()*compRound.length)] || undefined
-       if(checkEmptySpaces()){
-         compareScores()
+   if(checkEmptySpaces()){
+      compareScores()
+   }
+   else{
+      let computerHoles = getValidHoles()
+      for(let i = 0; i < computerHoles.length; i++){
+        let h = computerHoles[i]
+        h.style.pointerEvents='none'
+        compRound.push(h)
       }
-      else{
-         computerPicksHole(randomPick)
-         compRound.splice(compRound.indexOf(randomPick),1)
-         console.log(compRound)
-         compRound=[]
-      }
+      let randomPick = compRound[Math.floor(Math.random()*compRound.length)]
+        computerPicksHole(randomPick)
+        compRound.splice(compRound.indexOf(randomPick),1)
+        console.log(compRound)
+        compRound=[]
+   }
+   
+      
        
 }
 
