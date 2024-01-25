@@ -240,6 +240,7 @@ span{
     }
     #instructions-actual{
     overflow: auto;
+    height: 70%
     }
 }
 
