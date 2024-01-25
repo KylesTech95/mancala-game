@@ -37,6 +37,9 @@ const compareScores = () => {
 
    return playerScore > compScore ? console.log('Player Wins!') : playerScore < compScore ? console.log('Computer Wins!') : console.log('TIE!')
 }
+if(checkEmptySpaces()){
+   compareScores()
+}
 // window onload to change game board color
 window.addEventListener('load',e=>{
    gameBorder.style=`background-color:${bg_colors[Math.floor(Math.random()*bg_colors.length)]}`
@@ -115,15 +118,20 @@ function movePebbles(event){
             if(nextHole.id==='player-1'){
                let children = [...nextHole.children].filter((_,i)=>i!==0)
                if(children.includes(lastPebDrop) && handgrab.indexOf(lastPebDrop)== len-1){
+                  if(checkEmptySpaces()){
+                     compareScores()
+                  }
+                  else{
                   playerTurn()
-                  holesArr.filter((x,i)=>i<7).forEach(h=>h.style.pointerEvents='auto')
-               }
+                  holesArr.filter((x,i)=>i<6).forEach(h=>h.style.pointerEvents='auto')
+                  }   
+                }
                }
             else{
                console.log(i)
-               if(i===(len-1)){
-                  setTimeout(()=>computerTurn(),(600*len)+250)
-                  holesArr.forEach(h=>h.style.pointerEvents='none')
+               if(i===(len-1)){  
+               setTimeout(()=>computerTurn(),(600*len)+250)
+               holesArr.forEach(h=>h.style.pointerEvents='none')
                }
             }
             counter++
@@ -141,9 +149,6 @@ function movePebbles(event){
       
 // player turn
 function playerTurn(){
-   if(checkEmptySpaces()){
-      compareScores()
-   }  
    console.log('players turn!')
    // available_holes()
    // if the holes index is greater than player 1 side, set pointer events to none
@@ -181,11 +186,6 @@ const getValidHoles = () =>{
 
 // drop pebbles function
 function movePebbles_comp(arr){
-   if(arr === undefined){
-      if(checkEmptySpaces()){
-         compareScores()
-      }  
-   }
    counter=1
    // disable pointer events for player 1 immediately
    holesArr.forEach((h,index)=>{
@@ -229,13 +229,18 @@ function movePebbles_comp(arr){
             if(nextHole.id==='player-2' && counter==(len-1)){
                   setTimeout(()=>computerTurn(),(600*len)+250)
                   holesArr.filter((x,i)=>i<7).forEach(h=>h.style.pointerEvents='none')
-               
                }
             else{
                console.log(counter)
                if(i===(len-1)){
-                  setTimeout(()=>playerTurn(),(600*len)+250)
-                  holesArr.forEach(h=>h.style.pointerEvents='auto')
+                  if(checkEmptySpaces()){
+                     compareScores()
+                  }
+                  else{
+                     setTimeout(()=>playerTurn(),(600*len)+250)
+                     holesArr.forEach(h=>h.style.pointerEvents='auto')
+                  }
+               
                }
                
             }
@@ -251,12 +256,11 @@ function movePebbles_comp(arr){
    }
 // computer picks a valid hole
 function computerPicksHole(pick){
-console.log(pick)
+
 movePebbles_comp(pick)
 }
 // computer turn
 function computerTurn(){
-   
    handgrab=[]
    counter=0;
    let computerHoles = getValidHoles()
@@ -266,10 +270,16 @@ function computerTurn(){
          compRound.push(h)
        }
        let randomPick = compRound[Math.floor(Math.random()*compRound.length)] || undefined
-       computerPicksHole(randomPick)
+       if(checkEmptySpaces()){
+         compareScores()
+      }
+      else{
+         computerPicksHole(randomPick)
          compRound.splice(compRound.indexOf(randomPick),1)
          console.log(compRound)
          compRound=[]
+      }
+       
 }
 
 
