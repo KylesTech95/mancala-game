@@ -56,7 +56,7 @@ const compareScores = () => {
 
    gameStarted = false;
 
-      return +playerScore.textContent > +compScore.textContent ? display.textContent = 'Player Wins!' : +playerScore.textContent < +compScore.textContent ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
+      return playerScore.textContent > compScore.textContent ? display.textContent = 'Player Wins!' : playerScore.textContent < compScore.textContent ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
    
 
 }
