@@ -240,17 +240,14 @@ function movePebbles_comp(arr){
                score.textContent=(Number(score.textContent))+1
             }
             let children = [...nextHole.children].filter((_,i)=>i!==0)
-            if(nextHole.id==='player-2'){
-               let children = [...nextHole.children].filter((_,i)=>i!==0)
-               if(children.includes(lastPebDrop) && handgrab.indexOf(lastPebDrop) == len-1){
-                  computerTurn()
+            if(nextHole.id==='player-2' && counter==(len-1)){
+                  setTimeout(()=>computerTurn(),(600*len)+250)
                   holesArr.filter((x,i)=>i<7).forEach(h=>h.style.pointerEvents='none')
-               }
+               
                }
             else{
-               console.log(i)
+               console.log(counter)
                if(i===(len-1)){
-                  console.log(children.indexOf(lastPebDrop))
                   setTimeout(()=>playerTurn(),(600*len)+250)
                   holesArr.forEach(h=>h.style.pointerEvents='auto')
                }
@@ -273,11 +270,12 @@ movePebbles_comp(pick)
 }
 // computer turn
 function computerTurn(){
+   handgrab=[]
+   counter=0;
    let computerHoles = getValidHoles()
        for(let i = 0; i < computerHoles.length; i++){
          let h = computerHoles[i]
          h.style.pointerEvents='none'
-         console.log(h)
          compRound.push(h)
        }
        let randomPick = compRound[Math.floor(Math.random()*compRound.length)]
