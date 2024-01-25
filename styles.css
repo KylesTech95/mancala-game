@@ -134,6 +134,7 @@ span{
     #game-container{
         /* transform:translate(0,-10px); */
         padding-bottom:.5rem;
+        margin-top:-2.75rem;
     }
     .hole{
         width: 60px;
@@ -182,6 +183,7 @@ span{
         width:100%;
         /* transform:translate(0,-10px); */
         padding-bottom:.5rem;
+        margin-top:-2rem;
     }
     .hole{
         width: 75px;
