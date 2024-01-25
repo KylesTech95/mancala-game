@@ -27,7 +27,7 @@ margin-bottom: 2.5rem;
 /*Game border*/
 /*background image*/
 #game-border{
-min-width: 1000px;
+/* min-width: 1000px; */
 background-image:url('./media/wooden.webp');
 background-repeat: none;
 background-size:cover;
@@ -118,3 +118,33 @@ span{
 }
 
 
+
+@media screen and (max-height: 400px) and (max-width: 950px){
+    #game-container{
+        width:100%;
+        transform:scale(.75);
+        border:2px solid yellow;
+    }
+    .hole{
+        width: 75px;
+        height: 75px;
+        margin:0 .5rem;
+    }
+    #display{
+        margin-bottom:1rem;
+    }
+    #player-side1{
+        margin: -3rem 0;
+    }
+    #player-side2{
+        margin: -3rem 0;
+    }
+    
+    .pebble{
+        height:20px;
+        width:20px;
+    }
+}
+.goal{
+    width:70px;
+}
