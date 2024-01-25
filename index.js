@@ -130,7 +130,7 @@ function movePebbles(event){
                let children = [...nextHole.children].filter((_,i)=>i!==0)
                if(children.includes(lastPebDrop) && handgrab.indexOf(lastPebDrop)== len-1){
                   playerTurn()
-                  holesArr.forEach(h=>h.style.pointerEvents='auto')
+                  holesArr.filter((x,i)=>i<7).forEach(h=>h.style.pointerEvents='auto')
                }
                }
             else{
@@ -239,21 +239,22 @@ function movePebbles_comp(arr){
                let score = nextHole.children[0]
                score.textContent=(Number(score.textContent))+1
             }
-            // if goal contains handgrab[handgrab.length-1]
+            let children = [...nextHole.children].filter((_,i)=>i!==0)
             if(nextHole.id==='player-2'){
                let children = [...nextHole.children].filter((_,i)=>i!==0)
                if(children.includes(lastPebDrop) && handgrab.indexOf(lastPebDrop) == len-1){
                   computerTurn()
-                  holesArr.forEach(h=>h.style.pointerEvents='none')
+                  holesArr.filter((x,i)=>i<7).forEach(h=>h.style.pointerEvents='none')
                }
                }
             else{
                console.log(i)
                if(i===(len-1)){
-                  setTimeout(()=>{
-                     playerTurn()
-                  },(600*len)+250)
+                  console.log(children.indexOf(lastPebDrop))
+                  setTimeout(()=>playerTurn(),(600*len)+250)
+                  holesArr.forEach(h=>h.style.pointerEvents='auto')
                }
+               
             }
             // console.log(nextHole)
             counter++
