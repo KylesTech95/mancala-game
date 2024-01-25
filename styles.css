@@ -236,7 +236,7 @@ span{
     }
     #instructions{
     position:absolute;
-    top:90px;
+    top:45px;
     }
     #instructions-actual{
     overflow: auto;
