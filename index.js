@@ -21,7 +21,8 @@ let gameBorder = document.querySelector('#game-border')
 let bg_colors = ['ghostWhite','silver','navy','none','red']
 let gameHeight = document.querySelector('#game-border').getBoundingClientRect().height;
 let goals = document.querySelectorAll('.goal') // array 
-let playerScore, compScore
+let playerScore = document.querySelector('#player-1 > h1')
+let compScore = document.querySelector('#player-2 > h1')
 let gameStarted = false;
 let instructionsBtn = document.getElementById('instructions-container')
 let leftOverArr=[]
@@ -46,27 +47,28 @@ const compareScores = () => {
    let compEmpty = comp.filter((_,i)=>_.children.length > 0).length < 1
    
    
-   let leftOver = [...holesArr].filter((x,i)=>x.children.length > 1).forEach(h => {
-      let pebs = [...h.children]
+   let leftOver = [...holesArr].filter((x,i)=>[...x.children].length > 1)
+   for(let i = 0; i < leftOver.length; i++){
+      let pebs = [...leftOver[i].children];
       leftOverArr.push(pebs)
-   })
+
+   }
 
    gameStarted = false;
-   playerScore = +document.querySelector('#player-1 > h1').textContent
-   compScore = +document.querySelector('#player-2 > h1').textContent
+   
 
    if(playerEmpty&&compEmpty){
-      return playerScore > compScore ? display.textContent = 'Player Wins!' : playerScore < compScore ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
+      return +playerScore.textContent > +compScore.textContent ? display.textContent = 'Player Wins!' : +playerScore.textContent < +compScore.textContent ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
    }
    else if (playerEmpty && !compEmpty){
-      reduceRes = leftOver.reduce((a,b)=>a+b,0)
-      compScore += reduceRes
-      return playerScore > compScore ? display.textContent = 'Player Wins!' : playerScore < compScore ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
+      reduceRes = leftOver.reduce((a,b)=>a+b)
+      (compScore.textContent) = Number(compScore.textContent)  + reduceRes
+      return +playerScore.textContent > +compScore.textContent ? display.textContent = 'Player Wins!' : +playerScore.textContent < +compScore.textContent ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
    }
    else{
-      reduceRes = leftOver.reduce((a,b)=>a+b,0)
-      playerScore += reduceRes
-      return playerScore > compScore ? display.textContent = 'Player Wins!' : playerScore < compScore ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
+      reduceRes = leftOver.reduce((a,b)=>a+b)
+      (playerScore.textContent) = Number(playerScore.textContent)  + reduceRes
+      return +playerScore.textContent > +compScore.textContent ? display.textContent = 'Player Wins!' : +playerScore.textContent < +compScore.textContent ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
    }
 
 }
@@ -88,16 +90,14 @@ for(let i in goals){
    }
 }
 // Place pebbles in their perspective holes
-const placePebbles = (min,max,type) => {
+const placePebbles = (min,max) => {
    holesArr.forEach(h =>{
    if(!h.classList.contains('goal')){
       let pebble = [...h.children];
       pebble.forEach(peb=>{
       peb.style=`left:${Math.round((Math.random()*(max-min)+min)*unitSize)/unitSize}px;top:${Math.round((Math.random()*(max-min)+min)*unitSize)/unitSize}px;background:${colors[Math.floor(Math.random()*colors.length)]}`
       })
-   }
-    
-    
+     } 
    })
  
 
@@ -161,11 +161,17 @@ function movePebbles(event){
                 }
                }
             else{
-               console.log(i)
-               if(i===(len-1)){  
-                setTimeout(()=>computerTurn("Computer's turn"),250)
-               holesArr.forEach(h=>h.style.pointerEvents='none')
+               if(checkEmptySpaces()){
+                  compareScores()
                }
+               else{
+                  console.log(i)
+                  if(i===(len-1)){  
+                   setTimeout(()=>computerTurn("Computer's turn"),250)
+                  holesArr.forEach(h=>h.style.pointerEvents='none')
+                  }
+               }
+               
             }
             counter++
          }
@@ -312,9 +318,15 @@ function movePebbles_comp(arr){
             else{
                console.log(counter)
                if(counter===(len-1)){
-                  display.textContent = "Your turn";
+                  if(checkEmptySpaces()){
+                     compareScores()
+                  }
+                  else{
+                     display.textContent = "Your turn";
                      setTimeout(()=>playerTurn(),250)
                      holesArr.filter((x,i)=>i < 6).forEach(h=>h.style.pointerEvents='auto')
+                  }
+                  
                
                }
                
