@@ -152,9 +152,12 @@ span{
     }
     #player-1{
         right:-15px;
+        transform:translate(0,40px)
+
     }
     #player-2{
         left:-15px;
+        transform:translate(0,-40px)
     }
     
     .pebble{
@@ -162,9 +165,10 @@ span{
         width:12px;
     }
     .goal{
-
-        transform:scale(.5);
+       width:60px;
+       height:150px;
     }
+    
     #game-border{
         width: 100vw;
         height:300px;
