@@ -22,11 +22,14 @@ let bg_colors = ['ghostWhite','silver','navy','none','red']
 let gameHeight = document.querySelector('#game-border').getBoundingClientRect().height;
 let goals = document.querySelectorAll('.goal') // array 
 let playerScore = document.querySelector('#player-1 > h1')
+console.log(playerScore)
 let compScore = document.querySelector('#player-2 > h1')
 let gameStarted = false;
 let instructionsBtn = document.getElementById('instructions-container')
 let leftOverArr=[]
 let reduceRes;
+
+
 // instructions appear/shrink
 function appear(){
    console.log('approved')
@@ -39,6 +42,7 @@ const checkEmptySpaces = () => {
    let isEmpty = (p1.filter((_,i)=>_.children.length > 0).length < 1 || comp.filter((_,i)=>_.children.length > 0).length < 1);
    return isEmpty
 }
+
 // compare scores
 const compareScores = () => {
    let p1 = [...holesArr].filter((h,i)=>i < 6);
@@ -47,16 +51,26 @@ const compareScores = () => {
    let compEmpty = comp.filter((_,i)=>_.children.length > 0).length < 1
    
    
-   let leftOver = [...holesArr].filter((x,i)=>[...x.children].length > 1)
-   for(let i = 0; i < leftOver.length; i++){
-      let pebs = [...leftOver[i].children];
-      leftOverArr.push(pebs)
+   let fuck = [...holesArr].filter((x,i)=> i!==6&&i!==13).filter((x,i)=> x.children.length>0)
 
+   for(let i = 0; i < fuck.length; i++){
+      leftOverArr.push(...fuck[i].children)
+   }
+   leftOverArr = leftOverArr.filter(x=>x.localName!=='h1')
+   let sum = leftOverArr.length
+
+   if(!playerEmpty){
+      playerScore.textContent = (Number(playerScore.textContent) + sum)
+   }
+   if(!compEmpty){
+      compScore.textContent = (Number(compScore.textContent) + sum)
    }
 
    gameStarted = false;
-
-      return playerScore.textContent > compScore.textContent ? display.textContent = 'Player Wins!' : playerScore.textContent < compScore.textContent ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
+   console.log(sum)
+console.log(+compScore.textContent)
+console.log(+playerScore.textContent)
+      return +playerScore.textContent > +compScore.textContent ? display.textContent = 'Player Wins!' : +playerScore.textContent < +compScore.textContent ? display.textContent = 'Computer Wins!' : display.textContent = 'Tie'
    
 
 }
@@ -296,7 +310,7 @@ function movePebbles_comp(arr){
             }
             let children = [...nextHole.children].filter((_,i)=>i!==0)
             if(nextHole.id==='player-2' && counter==(len-1)&&!checkEmptySpaces()){
-                  setTimeout(()=>computerTurn("Computer Moves Again"),(600*len)+250)
+                  setTimeout(()=>computerTurn("Computer Moves Again"),250)
                   holesArr.filter((x,i)=>i<7).forEach(h=>h.style.pointerEvents='none')
                }
             else if(nextHole.id==='player-2' && counter==(len-1)&&checkEmptySpaces()){
